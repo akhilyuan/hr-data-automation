@@ -41,10 +41,28 @@ class DataProcessor:
 
         return '否'
     
-    def is_frontline_department(self, department: str) -> str:
+    def is_frontline_department(self, department: str, position: str) -> str:
         """判断是否一线部门"""
+        if pd.isna(department) or department == '' or position == '' or pd.isna(position):
+            return '否'
+        department_str = str(department).strip()
+        position_str = str(position).strip()
+        if department_str in self.mappings.FRONTLINE_DEPARTMENTS:
+            return '是'
+        if position_str in self.mappings.FRONTLINE_POSITIONS:
+            return '是'
+        
+        # 模糊匹配
+        for frontline_dept in self.mappings.FRONTLINE_DEPARTMENTS:
+            if frontline_dept in department_str or department_str in frontline_dept:
+                return '是'
+            
+        for frontline_pos in self.mappings.FRONTLINE_POSITIONS:
+            if frontline_pos in position_str or position_str in frontline_pos:
+                return '是'
+            
+        return '否'
 
-    
     def categorize_age(self, age: float) -> str:
         """年龄分组"""
         if pd.isna(age):

@@ -79,7 +79,10 @@ class ExcelMerger:
                 df['部门/区县名称'] = df['部门/区县名称'].apply(
                     lambda x: self.processor.apply_department_mappings(x)
                 )
-                
+
+            df['是否一线'] = df.apply(lambda row: self.processor.is_frontline_department(row['部门/区县名称'], row['岗位名称']), axis=1)
+
+
         if '姓名' in df.columns and '部门/区县名称' in df.columns:
             for name, new_dept in self.processor.mappings.SPECIAL_STAFF_MAPPING.items():
                 mask = df['姓名'] == name
@@ -91,8 +94,6 @@ class ExcelMerger:
             df['是否一线销售人员'] = df['岗位名称'].apply(self.processor.is_frontline_staff)
             frontline_count = (df['是否一线销售人员'] == '是').sum()
             print(f"一线人员数量: {frontline_count}")
-        
-        
 
         df = self.processor.clean_and_standarize(df)
         return df

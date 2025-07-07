@@ -107,7 +107,7 @@ def main():
         print()
     
     # 初始化HR管理器
-    hr_manager = setup_hr_manager(
+    hr_manager = q(
         base_path=args.base_path,
         output_folder=args.output
     )
