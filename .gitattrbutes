@@ -1,0 +1,5 @@
+data filter=git-crypt diff=git-crypt
+output filter=git-crypt diff=git-crypt
+
+.gitignore !filter !diff
+.gitattributes !filter !diff
