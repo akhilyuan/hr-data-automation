@@ -88,10 +88,12 @@ class ExcelMerger:
                     df.loc[mask, '部门/区县名称'] = new_dept
 
         if '岗位名称' in df.columns:
-            df['是否一线人员'] = df['岗位名称'].apply(self.processor.is_frontline_staff)
-            frontline_count = (df['是否一线人员'] == '是').sum()
+            df['是否一线销售人员'] = df['岗位名称'].apply(self.processor.is_frontline_staff)
+            frontline_count = (df['是否一线销售人员'] == '是').sum()
             print(f"一线人员数量: {frontline_count}")
         
+        
+
         df = self.processor.clean_and_standarize(df)
         return df
     

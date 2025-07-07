@@ -26,20 +26,24 @@ class DataProcessor:
         return self.mappings.DEPARTMENT_MAPPING.get(department_str, department_str)
     
     def is_frontline_staff(self, position: str) -> str:
-        """判断是否为一线员工"""
+        """判断是否为一线销售员工"""
         if pd.isna(position) or position == '':
             return '否'
         
         position_str = str(position).strip()
-        if position_str in self.mappings.FRONTLINE_POSITIONS:
+        if position_str in self.mappings.FRONTLINE_SALE_POSITIONS:
             return '是'
         
         # 模糊匹配
-        for frontline_pos in self.mappings.FRONTLINE_POSITIONS:
+        for frontline_pos in self.mappings.FRONTLINE_SALE_POSITIONS:
             if frontline_pos in position_str or position_str in frontline_pos:
                 return '是'
 
         return '否'
+    
+    def is_frontline_department(self, department: str) -> str:
+        """判断是否一线部门"""
+
     
     def categorize_age(self, age: float) -> str:
         """年龄分组"""
